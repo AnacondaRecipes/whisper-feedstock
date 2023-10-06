@@ -10,10 +10,10 @@ source:
   sha256: 14013e7563102d808aae0cb5b3b2326979236d4bcd54c343ea636761629920cd
 
 build:
-  number: 0
+  number: 1
   # https://github.com/graphite-project/whisper/issues/212
   skip: True  # [win]
-  script: python setup.py install
+  script: pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
