@@ -1,24 +1,23 @@
 {% set name = "whisper" %}
-{% set version = "1.1.5" %}
+{% set version = "1.1.10" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 14013e7563102d808aae0cb5b3b2326979236d4bcd54c343ea636761629920cd
-
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/whisper-{{ version }}.tar.gz
+  sha256: 435b4fb843c4c752719bdf0511a652d5be710e9bb35ad9ebe3b133268ee31c44
 build:
-  number: 1
-  # https://github.com/graphite-project/whisper/issues/212
-  skip: True  # [win]
-  script: pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
     - python
-    - six
+    - pip
+    - setuptools
+    - wheel
   run:
     - python
     - six
@@ -26,10 +25,16 @@ requirements:
 test:
   imports:
     - whisper
+  commands:
+    - pip check
+  requires:
+    - pip
 
 about:
-  home: http://graphiteapp.org
-  license: Apache
+  home: https://graphiteapp.org
+  license: Apache-2.0
+  license_file: LICENSE
+  license_family: Apache
   summary: File-based time-series database format for Graphite
   description: |
     Whisper is a fixed-size database, similar in design and purpose to RRD
@@ -37,6 +42,5 @@ about:
     over time. Whisper allows for higher resolution (seconds per point) of
     recent data to degrade into lower resolutions for long-term retention of
     historical data.
-  doc_url: http://graphite.readthedocs.org/en/latest/whisper.html
-  doc_source_url: https://github.com/graphite-project/graphite-web/blob/master/docs/index.rst
+  doc_url: https://graphite.readthedocs.io/
   dev_url: https://github.com/graphite-project/whisper
